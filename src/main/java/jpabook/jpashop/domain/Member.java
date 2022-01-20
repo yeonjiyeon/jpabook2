@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
     @Id @GeneratedValue//기본 auto
     @Column(name = "MEMBER_ID")//회사마다 대문자로 쓰기도 소문자로 쓰기도 차이가 있음
     private Long id;
-    private String name;
-    private String city;
-    private String street;
-    private String zipcode;
 
-    @OneToMany(mappedBy = "MEMBER_ID")
-    private List<Order> orders = new ArrayList<>();
+    private String name;
+
+
+    @Embedded
+    private Address address;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<Order>();
 
     public Long getId() {
         return id;
@@ -33,27 +35,19 @@ public class Member {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getStreet() {
-        return street;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
